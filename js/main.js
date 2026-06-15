@@ -56,7 +56,8 @@ if (catTitles.length) {
 }
 
 // ===== Lightbox =====
-const galleryImages = Array.from(document.querySelectorAll('.thumb img, .frame img'));
+const galleryThumbs = Array.from(document.querySelectorAll('.thumb, .frame'));
+const galleryImages = galleryThumbs.map(t => t.querySelector('img'));
 
 if (galleryImages.length) {
   const lightbox = document.createElement('div');
@@ -107,8 +108,11 @@ if (galleryImages.length) {
     updateLightbox();
   }
 
-  galleryImages.forEach((img, index) => {
-    img.addEventListener('click', () => openLightbox(index));
+  galleryThumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', (e) => {
+      e.preventDefault();
+      openLightbox(index);
+    });
   });
 
   closeBtn.addEventListener('click', closeLightbox);
